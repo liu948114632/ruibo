@@ -67,11 +67,12 @@ module.exports = function (app) {
         // let toAddress = req.query.toAddress;
         // let secret = req.query.secret;
         // let amount =req.query.amount;
+        // let tag = req.query.tag;
         let fromAddress = 'r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59';
         let toAddress = 'rpZc4mVfWUif9CRoHRKKcmhu1nx2xktxBo';
         let secret = 'ss2KdKF9r4xvpBfcEScwD5rPZnrwY';
         let amount ='100';
-
+        let tag = '10024';
         let payment = {
             "source": {
                 "address": fromAddress,
@@ -81,6 +82,7 @@ module.exports = function (app) {
                 }
             },
             "destination": {
+                "tag": tag,
                 "address": toAddress,
                 "amount": {
                     "value": amount,
