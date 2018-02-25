@@ -63,16 +63,16 @@ module.exports = function (app) {
     //r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59  rpZc4mVfWUif9CRoHRKKcmhu1nx2xktxBo
     //转账
     app.get('/sendTransaction', function (req, res) {
-        // let fromAddress = req.query.fromAddress;
-        // let toAddress = req.query.toAddress;
-        // let secret = req.query.secret;
-        // let amount =req.query.amount;
-        // let tag = req.query.tag;
-        let fromAddress = 'r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59';
-        let toAddress = 'rpZc4mVfWUif9CRoHRKKcmhu1nx2xktxBo';
-        let secret = 'ss2KdKF9r4xvpBfcEScwD5rPZnrwY';
-        let amount ='100';
-        let tag = '10024';
+        let fromAddress = req.query.fromAddress;
+        let toAddress = req.query.toAddress;
+        let secret = req.query.secret;
+        let amount =req.query.amount;
+        let tag = req.query.tag;
+        // let fromAddress = 'r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59';
+        // let toAddress = 'rpZc4mVfWUif9CRoHRKKcmhu1nx2xktxBo';
+        // let secret = 'ss2KdKF9r4xvpBfcEScwD5rPZnrwY';
+        // let amount ='100';
+        // let tag = '10024';
         let payment = {
             "source": {
                 "address": fromAddress,
@@ -82,7 +82,7 @@ module.exports = function (app) {
                 }
             },
             "destination": {
-                "tag": tag,
+                "tag": parseInt(tag),
                 "address": toAddress,
                 "amount": {
                     "value": amount,
@@ -112,10 +112,10 @@ module.exports = function (app) {
     //获取交易信息
     app.get('/getTransaction', function (req, res) {
         let id = req.query.id;
-        api.getTransaction(id,{minLedgerVersion:36265200, maxLedgerVersion :36265266})
+        api.getTransaction(id)
             .then(info=>res.send(info))
             .catch(e=>{console.error(e)});
-    })
+    });
 
 
     //获取跟账户有关的交易
@@ -127,8 +127,8 @@ module.exports = function (app) {
         let max = req.query.max;  //哪个区块结束
         api.getTransactions(address,{
             initiated : false,
-            minLedgerVersion :min,
-            maxLedgerVersion:max,
+            minLedgerVersion :parseInt(min),
+            maxLedgerVersion:parseInt(max),
             excludeFailures: true,
             types :['payment'],  //只查找支付的
             counterparty :address   //只显示瑞波币交易记录
